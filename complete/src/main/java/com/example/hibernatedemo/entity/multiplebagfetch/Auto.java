@@ -2,6 +2,8 @@ package com.example.hibernatedemo.entity.multiplebagfetch;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,7 +22,7 @@ import java.util.List;
 public class Auto {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
@@ -29,7 +31,9 @@ public class Auto {
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
-    @OneToMany(mappedBy="auto",fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "auto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+//    @BatchSize(size = 10)
 //    @OrderColumn(name = "tool_order")
     private List<Tool> tools;
 }

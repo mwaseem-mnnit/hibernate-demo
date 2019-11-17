@@ -2,6 +2,7 @@ package com.example.hibernatedemo.entity.multiplebagfetch;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,5 +24,6 @@ public class Tool {
 
     @ManyToOne
     @JoinColumn(name = "auto_id", nullable = false)
+    @BatchSize(size = 10)
     private Auto auto;
 }

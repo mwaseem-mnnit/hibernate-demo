@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
-    @Query("SELECT p FROM Person p JOIN FETCH p.autos a JOIN FETCH a.tools")
+    @Query("SELECT distinct p FROM Person p JOIN FETCH p.autos a")
     List<Person> findAll();
 }

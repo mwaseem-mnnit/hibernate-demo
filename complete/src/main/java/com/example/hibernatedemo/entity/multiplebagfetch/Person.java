@@ -24,6 +24,6 @@ public class Person {
     private String name;
 
     @OneToMany(mappedBy="person",fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    @OrderColumn(name = "auto_order")
+//    @OrderColumn(name = "auto_order")
     private List<Auto> autos;
 }
