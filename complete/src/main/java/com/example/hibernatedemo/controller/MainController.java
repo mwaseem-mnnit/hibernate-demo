@@ -81,10 +81,11 @@ public class MainController {
 
 	@PostMapping(value="add")
 	public @ResponseBody String addNewUser (@RequestParam String name
-			, @RequestParam String email) {
+			, @RequestParam String email, @RequestParam Boolean test) {
 		User n = new User();
 		n.setName(name);
 		n.setEmail(email);
+		n.setTest(test);
 		userRepository.save(n);
 		return "Saved";
 	}

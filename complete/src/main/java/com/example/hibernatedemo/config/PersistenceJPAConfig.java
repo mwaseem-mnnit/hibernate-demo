@@ -33,13 +33,8 @@ public class PersistenceJPAConfig {
         config.setConnectionTestQuery("SELECT 1");
         config.setUsername("root");
         config.setPassword("root1234");
-//        config.setMinimumIdle(mysqlMinIdleThreads);
-//        config.setMaximumPoolSize(mysqlMaxThreadPoolSize);
-//        config.setConnectionTimeout(connectionTimeoutMillis);
-//        config.setIdleTimeout(idleTimeoutMillis);
-//        config.setMaxLifetime(maxLifeTimeMillis);
 
-         https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
+         //https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -64,7 +59,6 @@ public class PersistenceJPAConfig {
         properties.setProperty("hibernate.generate_statistics", "true");
         factory.setJpaProperties(properties);
         factory.afterPropertiesSet();
-
         return factory.getObject();
     }
 

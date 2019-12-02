@@ -6,6 +6,7 @@ import com.example.hibernatedemo.entity.User;
 import com.example.hibernatedemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
@@ -42,10 +43,10 @@ public class UserService {
         return userDao.create(user);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void testEntityState(String name) {
        User user = userDao.getByName(name);
-       user.setName("name-updated");
+//       user.setName("name-updated");
        List<Comment> comments = user.getComments();
        comments.get(0).setComment("updated");
        System.out.println("comments: "+user.getComments());
@@ -56,7 +57,7 @@ public class UserService {
         User user = userRepository.findByName(name);
         user.setEmail("wmai-updated"+email);
         List<Comment> comments = user.getComments();
-        comments.get(0).setComment("updated");
+//        comments.get(0).setComment("updated");
         System.out.println("comments: "+user.getComments());
     }
 
