@@ -1,5 +1,8 @@
 package com.example.hibernatedemo.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +18,11 @@ public class ConsignmentGraph {
     private Long id;
 
     @OneToOne( mappedBy = "consignmentGraph")
+    @Fetch(FetchMode.JOIN)
     private Vas1 vas1;
 
     @OneToOne( mappedBy = "consignmentGraph")
+    @Fetch(FetchMode.JOIN)
     private Vas2 vas2;
 
     public Long getId() {
