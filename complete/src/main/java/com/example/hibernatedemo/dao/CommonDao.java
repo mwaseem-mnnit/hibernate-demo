@@ -94,8 +94,10 @@ public class CommonDao {
     public List<ConsignmentGraph> getGraphsQueryFetch(List<Long> ids) {
         Session session = (Session) entityManager.getDelegate();
         List<ConsignmentGraph> consignmentGraphs = session.createQuery("select cg From ConsignmentGraph cg join fetch cg.vas1 join fetch cg.vas2 " +
-                " Where cg.id IN :ids ", ConsignmentGraph.class)
-                .setParameter("ids", ids).setMaxResults(5).getResultList();
+                " Where cg.id IN :ids AND cg.vas1.isActive = :active1 AND cg.vas2.isActive = :active2 ", ConsignmentGraph.class)
+                .setParameter("ids", ids)
+                .setParameter("active1", true)
+                .setParameter("active2", true).setMaxResults(5).getResultList();
         return consignmentGraphs;
     }
 
