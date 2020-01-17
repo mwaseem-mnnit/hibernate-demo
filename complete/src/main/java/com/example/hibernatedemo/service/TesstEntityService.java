@@ -1,5 +1,6 @@
 package com.example.hibernatedemo.service;
 
+import com.example.hibernatedemo.dao.TestEntityDao;
 import com.example.hibernatedemo.entity.TestEntity;
 import com.example.hibernatedemo.repository.TestEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ public class TesstEntityService {
 
     @Autowired
     private TestEntityRepository testEntityRepository;
+
+    @Autowired
+    private TestEntityDao testEntityDao;
 
     @Transactional
     public String testWithoutTransaction() {
@@ -38,5 +42,11 @@ public class TesstEntityService {
         Integer num = Integer.parseInt("cat");
         System.out.println(num);
         return "success";
+    }
+
+    @Transactional
+    public String testScope(String name, Integer id) {
+        testEntityDao.testPersistenceContextScope(id, name);
+        return "SUCCESS";
     }
 }
