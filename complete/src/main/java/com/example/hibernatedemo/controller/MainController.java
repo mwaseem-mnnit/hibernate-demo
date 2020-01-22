@@ -1,11 +1,11 @@
 package com.example.hibernatedemo.controller;
 
+import com.example.hibernatedemo.dto.UserDTO;
 import com.example.hibernatedemo.entity.Comment;
+import com.example.hibernatedemo.entity.User;
+import com.example.hibernatedemo.repository.UserRepository;
 import com.example.hibernatedemo.service.CommentService;
 import com.example.hibernatedemo.service.CommonService;
-import com.example.hibernatedemo.entity.User;
-import com.example.hibernatedemo.dto.UserDTO;
-import com.example.hibernatedemo.repository.UserRepository;
 import com.example.hibernatedemo.service.UserService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,21 +13,13 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value="demo")
@@ -121,6 +113,12 @@ public class MainController {
 		return "success";
 	}
 
+	@GetMapping(value= "dept")
+	public String getDepartment(@RequestParam(name = "id") Integer id,
+								@RequestParam(name="name") String name) {
+		commonService.getDepartment(id, name);
+		return "success";
+	}
 
 	@RequestMapping(value = "/videos/upload", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String uploadVideo(MultipartFile files,

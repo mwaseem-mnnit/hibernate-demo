@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://192.168.1.8:3306/db_example
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: root1234
+    password: root
     hikari:
       idle-timeout: 10000
       maximumPoolSize: 20

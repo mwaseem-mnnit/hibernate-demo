@@ -1,8 +1,10 @@
 package com.example.hibernatedemo.service;
 
+import com.example.hibernatedemo.dao.CommonDao;
 import com.example.hibernatedemo.dao.UserDao;
 import com.example.hibernatedemo.entity.Comment;
 import com.example.hibernatedemo.entity.User;
+import com.example.hibernatedemo.entity.named.query.DepartmentEntity;
 import com.example.hibernatedemo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ import java.util.List;
 public class CommonService {
 
     @Autowired
+    private CommonDao commonDao;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -40,6 +45,10 @@ public class CommonService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public String getDepartment(Integer id, String name) {
+        DepartmentEntity entity=commonDao.getDepartment(id, name);
+        return "success";
+    }
     public void commonMethod(String name, String comment, boolean flag) {
         User user = new User();
         user.setEmail(name);

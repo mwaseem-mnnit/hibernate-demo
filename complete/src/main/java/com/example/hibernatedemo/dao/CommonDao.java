@@ -4,6 +4,8 @@ import com.example.hibernatedemo.entity.Consignment;
 import com.example.hibernatedemo.entity.ConsignmentGraph;
 import com.example.hibernatedemo.entity.Vas1;
 import com.example.hibernatedemo.entity.Vas2;
+import com.example.hibernatedemo.entity.named.query.DepartmentEntity;
+import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,16 @@ public class CommonDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Transactional
+    public DepartmentEntity getDepartment(Integer id, String name) {
+        Session session = (Session) entityManager.getDelegate();
+        Filter filter = session.enableFilter("deptFilter");
+        filter.setParameter("name", name);
+        return (DepartmentEntity) session.getNamedQuery(DepartmentEntity.GET_DEPARTMENT_BY_ID)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 
     @Transactional
     public Consignment save(Consignment consignment) {

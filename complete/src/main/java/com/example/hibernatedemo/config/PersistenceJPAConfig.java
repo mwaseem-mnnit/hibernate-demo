@@ -32,7 +32,7 @@ public class PersistenceJPAConfig {
         // The connection test query is needed for replication driver to work
         config.setConnectionTestQuery("SELECT 1");
         config.setUsername("root");
-        config.setPassword("root1234");
+        config.setPassword("root");
 
          //https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
         config.addDataSourceProperty("cachePrepStmts", "true");
