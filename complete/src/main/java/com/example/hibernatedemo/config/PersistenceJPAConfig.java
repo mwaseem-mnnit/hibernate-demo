@@ -1,8 +1,8 @@
 package com.example.hibernatedemo.config;
 
-import com.mysql.jdbc.Driver;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,17 +22,29 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class PersistenceJPAConfig {
 
+    @Value("${spring.datasource.url}")
+    private String dataSourceUrl;
+
+    @Value("${spring.datasource.username}")
+    private String user;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName;
+
     @Bean
     @Primary
     DataSource dataSource() throws PropertyVetoException {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/db_example");
-        config.setDriverClassName(Driver.class.getName());
+        config.setJdbcUrl(dataSourceUrl);
+        config.setDriverClassName(driverClassName);
 
         // The connection test query is needed for replication driver to work
         config.setConnectionTestQuery("SELECT 1");
-        config.setUsername("root");
-        config.setPassword("root");
+        config.setUsername(user);
+        config.setPassword(password);
 
          //https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
         config.addDataSourceProperty("cachePrepStmts", "true");
@@ -56,6 +68,10 @@ public class PersistenceJPAConfig {
         factory.setPackagesToScan("com.example.hibernatedemo");
         factory.setDataSource(dataSource());
         Properties properties = new Properties();
+        properties.setProperty("hibernate.jdbc.batch_size", String.valueOf(30));
+        properties.setProperty("hibernate.jdbc.batch_versioned_data", String.valueOf(true));
+        properties.setProperty("hibernate.order_inserts", String.valueOf(true));
+        properties.setProperty("hibernate.order_updates", String.valueOf(true));
         properties.setProperty("hibernate.generate_statistics", "true");
         factory.setJpaProperties(properties);
         factory.afterPropertiesSet();

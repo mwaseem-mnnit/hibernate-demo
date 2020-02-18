@@ -105,12 +105,24 @@ public class MainController {
 		return user;
 	}
 
+	@GetMapping(value= "test/nested")
+	public String testNested(@RequestParam(name = "name") String name,
+						 @RequestParam(name = "comment") String comment) {
+		commonService.nestedTransaction(name, comment);
+		return "success";
+	}
+
 	@GetMapping(value= "test")
 	public String create(@RequestParam(name = "name") String name,
 						 @RequestParam(name = "comment") String comment,
 						 @RequestParam(name="flag") Boolean flag) {
 		commonService.commonMethod(name, comment, flag);
 		return "success";
+	}
+
+	@GetMapping(value= "test/version/on/query")
+	public Integer testVersionOnQuery(@RequestParam(name = "id") Integer id) {
+		return commonService.testVersionUpdateOnQuery(id);
 	}
 
 	@GetMapping(value= "dept")

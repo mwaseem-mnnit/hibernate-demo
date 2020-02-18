@@ -1,13 +1,6 @@
 package com.example.hibernatedemo.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +13,15 @@ public class User {
 	@Column
     private String name;
 
+	@Column
     private String email;
 
     @Column(name = "test")
     private Boolean test;
+
+    @Version
+	@Column(name = "version")
+	private Integer version;
 
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();

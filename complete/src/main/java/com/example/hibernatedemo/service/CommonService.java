@@ -7,15 +7,14 @@ import com.example.hibernatedemo.entity.User;
 import com.example.hibernatedemo.entity.named.query.DepartmentEntity;
 import com.example.hibernatedemo.repository.UserRepository;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +41,32 @@ public class CommonService {
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
 
+    @Autowired
+    private NestedTransaction nestedTransaction;
+
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Transactional
+    public String nestedTransaction(String name, String comment) {
+        String response = nestedTransaction.requiresNew(name+"1", comment+"1");
+        System.out.println(response);
+        commonMethod(name, comment, true);
+        return "SUCCESS";
+    }
 
     public String getDepartment(Integer id, String name) {
         DepartmentEntity entity=commonDao.getDepartment(id, name);
         return "success";
     }
+    @Transactional
+    public int testVersionUpdateOnQuery(int id) {
+        Session session = (Session) entityManager.getDelegate();
+        Query<Integer> query = session.createQuery("Update User U Set U.name = 'twenty' WHERE U.id=:id");
+        query.setParameter("id", id);
+        return query.executeUpdate();
+    }
+
     public void commonMethod(String name, String comment, boolean flag) {
         User user = new User();
         user.setEmail(name);
@@ -63,6 +81,8 @@ public class CommonService {
         list.add(comment1);
         list.add(comment2);
         user.setComments(list);
+        if(name != null)
+        throw new RuntimeException("exception");
         userRepository.save(user);
     }
 

@@ -1,7 +1,8 @@
 spring:
+  profiles: local
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://192.168.1.8:3306/db_example
+    url: jdbc:mysql://localhost:3306/db_example
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
@@ -11,5 +12,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-hibernate:
-  generate_statistics: true
+      jdbc:
+        batch_size: 30
+        batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 30
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
