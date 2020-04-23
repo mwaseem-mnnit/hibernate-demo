@@ -1,6 +1,8 @@
 package com.example.hibernatedemo.service;
 
 import com.example.hibernatedemo.dao.UserDao;
+import com.example.hibernatedemo.dto.UserDTO;
+import com.example.hibernatedemo.dto.UserProjection;
 import com.example.hibernatedemo.entity.Comment;
 import com.example.hibernatedemo.entity.User;
 import com.example.hibernatedemo.repository.UserRepository;
@@ -52,6 +54,14 @@ public class UserService {
        System.out.println("comments: "+user.getComments());
     }
 
+
+    public List<UserDTO> getDTO(List<Integer> ids) {
+        return userRepository.getUser(ids);
+    }
+
+    public List<UserProjection> getDTOProjection(List<Integer> ids) {
+        return userRepository.getUserInterface(ids);
+    }
 
     public void testEntityStateRepo(String name, String email) {
         User user = userRepository.findByName(name);

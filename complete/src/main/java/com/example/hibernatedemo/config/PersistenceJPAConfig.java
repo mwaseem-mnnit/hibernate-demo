@@ -34,6 +34,9 @@ public class PersistenceJPAConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 
+    @Value("${spring.datasource.dialect}")
+    private String dialect;
+
     @Bean
     @Primary
     DataSource dataSource() throws PropertyVetoException {
@@ -60,7 +63,7 @@ public class PersistenceJPAConfig {
     public EntityManagerFactory entityManagerFactory() throws PropertyVetoException {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+        vendorAdapter.setDatabasePlatform(dialect);
         vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();

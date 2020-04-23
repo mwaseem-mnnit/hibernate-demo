@@ -1,14 +1,13 @@
 package com.example.hibernatedemo.controller;
 
 import com.example.hibernatedemo.dao.UserDao;
+import com.example.hibernatedemo.dto.UserDTO;
+import com.example.hibernatedemo.dto.UserProjection;
 import com.example.hibernatedemo.service.CommonService;
+import com.example.hibernatedemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +16,8 @@ import java.util.List;
 @RequestMapping(value="/v1/")
 public class EmployeeController {
 
-
+    @Autowired
+    private UserService userService;
 
     @Autowired
     CommonService commonService;
@@ -41,6 +41,18 @@ public class EmployeeController {
     @Transactional
     public void testEntityState(@RequestParam String name) {
         commonService.testEntityState(name);
+    }
+
+    @GetMapping(path = "/test/dto/projection")
+    @Transactional
+    public List<UserDTO> testDTOProjection(@RequestBody List<Integer> ids) {
+        return userService.getDTO(ids);
+    }
+
+    @GetMapping(path = "/test/dto/projection/interface")
+    @Transactional
+    public List<UserProjection> testDTOProjectionInterface(@RequestBody List<Integer> ids) {
+        return userService.getDTOProjection(ids);
     }
 
     @GetMapping(path = "/test/entity/state/repo")
