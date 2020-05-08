@@ -17,7 +17,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "select new com.example.hibernatedemo.dto.UserDTO( u.name, u.email) from User u, Comment c where c.id = u.id and u.id in :ids")
     List<UserDTO> getUser(List<Integer> ids);
 
-    @Query(value = "select  u.name, u.email from User u where id in :ids", nativeQuery = true)
+    @Query(value = "select  u.name, u.email, c.comment from User u join Comment c on u.id = c.user_id where u.id in :ids", nativeQuery = true)
     List<UserProjection> getUserInterface(List<Integer> ids);
 
     User findByName(String name);

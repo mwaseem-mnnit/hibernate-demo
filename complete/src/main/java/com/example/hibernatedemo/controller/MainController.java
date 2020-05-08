@@ -2,7 +2,9 @@ package com.example.hibernatedemo.controller;
 
 import com.example.hibernatedemo.dto.UserDTO;
 import com.example.hibernatedemo.entity.Comment;
+import com.example.hibernatedemo.entity.Product;
 import com.example.hibernatedemo.entity.User;
+import com.example.hibernatedemo.repository.ProductRepository;
 import com.example.hibernatedemo.repository.UserRepository;
 import com.example.hibernatedemo.service.CommentService;
 import com.example.hibernatedemo.service.CommonService;
@@ -26,6 +28,9 @@ import java.util.List;
 public class MainController {
 
 	@Autowired
+	private ProductRepository productRepository;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
@@ -47,6 +52,16 @@ public class MainController {
 	public @ResponseBody
 	UserDTO test(@RequestBody UserDTO userDTO) {
 		return userDTO;
+	}
+
+	@GetMapping(value = "graph")
+	public Product getProduct(@RequestParam Integer id) {
+		return productRepository.findById(id).get();
+	}
+
+	@GetMapping(value = "graph/name")
+	public Product getProductByName(@RequestParam Integer id) {
+		return productRepository.findByName(id);
 	}
 
 	@GetMapping(value = "sample")

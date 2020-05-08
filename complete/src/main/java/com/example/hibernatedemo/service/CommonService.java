@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.function.Function;
 
 
 @Service
@@ -109,6 +109,14 @@ public class CommonService {
         User user = userRepository.findByName(name);
         userService.testEntityStateRepo(name, email);
         System.out.println("user: "+user);
+    }
+
+    public Function<String, Function<String, User>> getUser() {
+      return name -> email -> {
+          User user = userRepository.findByName(name);
+          userService.testEntityStateRepo(name , email);
+          return user;
+      };
     }
 
     public void testEntity(String name, String email) {
