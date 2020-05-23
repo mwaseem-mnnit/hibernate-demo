@@ -2,6 +2,7 @@ package com.example.hibernatedemo.service;
 
 import com.example.hibernatedemo.dao.CommentDao;
 import com.example.hibernatedemo.entity.Comment;
+import com.example.hibernatedemo.entity.User;
 import com.example.hibernatedemo.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,13 @@ public class CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    public String getCOmment(Integer userId) {
+        User u=new User();
+        u.setId(userId);
+        Comment c=commentRepository.findByUser(u.getId());
+        return c.getComment();
+    }
 
 //    @Transactional( propagation = Propagation.REQUIRED)
     public Comment getCommentById(Integer id) {

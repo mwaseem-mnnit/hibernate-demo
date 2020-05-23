@@ -48,6 +48,11 @@ public class MainController {
 	@Autowired
 	private List<HttpMessageConverter> list;
 
+	@GetMapping("comment")
+	public String getCOmment(@RequestParam  Integer userId) {
+		return commentService.getCOmment(userId);
+	}
+
 	@PostMapping(value = "read")
 	public @ResponseBody
 	UserDTO test(@RequestBody UserDTO userDTO) {
