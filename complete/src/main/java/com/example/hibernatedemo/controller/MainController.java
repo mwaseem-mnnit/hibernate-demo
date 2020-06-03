@@ -152,9 +152,14 @@ public class MainController {
 		return "success";
 	}
 
-	@GetMapping(value= "test/version/on/query")
-	public Integer testVersionOnQuery(@RequestParam(name = "id") Integer id) {
+	@GetMapping(value= "update/query/version")
+	public Integer testVersionOnUpdate(@RequestParam(name = "id") Integer id) {
 		return commonService.testVersionUpdateOnQuery(id);
+	}
+
+	@GetMapping(value= "entity/state/version")
+	public Integer testVersionOnEntityLoad(@RequestParam(name = "id") Integer id) {
+		return commonService.testVersionOnEntityLoad(id);
 	}
 
 	@GetMapping(value= "dept")

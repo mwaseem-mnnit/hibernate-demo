@@ -59,12 +59,28 @@ public class CommonService {
         DepartmentEntity entity=commonDao.getDepartment(id, name);
         return "success";
     }
+
     @Transactional
     public int testVersionUpdateOnQuery(int id) {
         Session session = (Session) entityManager.getDelegate();
-        Query<Integer> query = session.createQuery("Update User U Set U.name = 'twenty' WHERE U.id=:id");
+        Query<Integer> query = session.createQuery("Update User U Set U.name = :name, U.version=U.version+1 WHERE U.id=:id");
         query.setParameter("id", id);
+        query.setParameter("name", "name-"+System.currentTimeMillis());
+//        return query.setLockMode(LockModeType.WRITE).executeUpdate();
         return query.executeUpdate();
+    }
+
+    @Transactional
+    public int testVersionOnEntityLoad(int id) {
+        Session session = (Session) entityManager.getDelegate();
+        User user = session.get(User.class, id);
+        user.setEmail(user.getEmail()+id);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 
     public void commonMethod(String name, String comment, boolean flag) {
