@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,6 +68,17 @@ public class MainController {
 	@GetMapping(value = "graph/name")
 	public Product getProductByName(@RequestParam Integer id) {
 		return productRepository.findByName(id);
+	}
+
+	@GetMapping(value = "name")
+	public Product getProductByName(@RequestParam String name) {
+		return productRepository.doSomething(name);
+	}
+
+	@GetMapping(value = "prod/update")
+	@Transactional
+	public int getProductByName(@RequestParam String cat, @RequestParam Integer id) {
+		return productRepository.updateCateById(cat, id);
 	}
 
 	@GetMapping(value = "sample")
