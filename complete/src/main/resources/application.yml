@@ -10,7 +10,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
-    dialect: org.hibernate.dialect.H2Dialect
+#    dialect: org.hibernate.dialect.H2Dialect
+    dialect: org.hibernate.dialect.MySQL5Dialect
     hikari:
       idle-timeout: 10000
       maximumPoolSize: 20

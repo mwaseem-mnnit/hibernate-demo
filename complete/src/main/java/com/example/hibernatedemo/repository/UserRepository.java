@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.example.hibernatedemo.entity.User;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends CrudRepository<User, Integer> {
+
+    @Query(value = "select u.count as u_count from User u where u.id = :id ", nativeQuery = true)
+    Integer getCount(@Param("id") Integer id);
 
     @Query(value = "select new com.example.hibernatedemo.dto.UserDTO( u.name, u.email) from User u, Comment c where c.id = u.id and u.id in :ids")
     List<UserDTO> getUser(List<Integer> ids);

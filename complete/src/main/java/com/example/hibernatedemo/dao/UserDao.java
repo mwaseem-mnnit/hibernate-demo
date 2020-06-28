@@ -33,6 +33,17 @@ public class UserDao {
         }
     }
 
+    public Integer getCountById(Integer id) {
+        Session session = (Session) entityManager.getDelegate();
+        try {
+            Query query = session.createNativeQuery("select u.count as u_count from User u where u.id = :id ");
+            query.setParameter("id",id);
+            return (Integer)  query.uniqueResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public User create( User user) {
         Session session = (Session) entityManager.getDelegate();
         session.save(user);

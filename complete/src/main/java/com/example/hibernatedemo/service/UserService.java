@@ -32,6 +32,10 @@ public class UserService {
         return userDao.getByName(name);
     }
 
+    public Integer getCount(Integer id) {
+        return userRepository.getCount(id);
+    }
+
     public User create( String name, boolean flag) {
         User user = null;
 //        user.setEmail("");

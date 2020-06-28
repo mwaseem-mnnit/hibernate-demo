@@ -20,7 +20,7 @@ import java.util.List;
 @Setter
 public class Shipment implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @Column( unique = true)

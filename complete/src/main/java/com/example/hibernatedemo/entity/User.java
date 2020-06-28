@@ -14,6 +14,9 @@ public class User {
     private String name;
 
 	@Column
+	private Integer count;
+
+	@Column
     private String email;
 
     @Column(name = "test")
