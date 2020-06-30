@@ -1,11 +1,12 @@
 package com.example.hibernatedemo.batching;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by mohd.waseem on 03/02/20.
@@ -13,12 +14,13 @@ import java.util.List;
 @Service
 public class BatchingService {
 
-    @Autowired
-    private EntityIdentityRepository identityRepository;
+    private final EntityIdentityRepository identityRepository;
+    private final EntitySequenceRepository sequenceRepository;
 
-    @Autowired
-    private EntitySequenceRepository sequenceRepository;
-
+    public BatchingService(EntityIdentityRepository identityRepository, EntitySequenceRepository sequenceRepository) {
+        this.identityRepository = identityRepository;
+        this.sequenceRepository = sequenceRepository;
+    }
     @Transactional
     public String getBatch(Long col1) {
         EntityIdentity e = identityRepository.findByCol1(col1);
@@ -30,22 +32,14 @@ public class BatchingService {
         String response="";
         if( isIdentity) {
             List<EntityIdentity> list = new ArrayList<>();
-            for(int i=0;i<batchSize;i++) {
-                list.add(new EntityIdentity(prefix+"one"+i, prefix+"two"+i));
-            }
+            IntStream.range(0, batchSize).forEach( i-> list.add(new EntityIdentity(prefix+"one"+i, prefix+"two"+i)));
             identityRepository.saveAll(list);
-            for (EntityIdentity entityIdentity : list) {
-                response = response+"\n"+entityIdentity.toString();
-            }
+            response = list.stream().map(EntityIdentity::toString).collect(Collectors.joining("\n"));
         } else {
             List<EntitySequence> list = new ArrayList<>();
-            for(int i=0;i<batchSize;i++) {
-                list.add(new EntitySequence(prefix+"one"+i, prefix+"two"+i));
-            }
+            IntStream.range(0, batchSize).forEach( i-> list.add(new EntitySequence(prefix+"one"+i, prefix+"two"+i)));
             sequenceRepository.saveAll(list);
-            for (EntitySequence entitySequence : list) {
-                response = response+"\n"+entitySequence.toString();
-            }
+            response = list.stream().map(EntitySequence::toString).collect(Collectors.joining("\n"));
         }
         return response;
     }

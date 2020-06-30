@@ -1,6 +1,8 @@
 package com.example.hibernatedemo.batching;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +18,20 @@ import javax.persistence.Id;
 public class EntitySequence {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(
+            name = "sequenceGenerator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "sequence_name", value = "hibernate_sequence"),
+                    @Parameter(name = "optimizer", value = "pooled"),
+                    @Parameter(name = "initial_value", value = "1"),
+                    @Parameter(name = "increment_size", value = "100")
+            }
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "sequenceGenerator"
+    )
     private Long id;
 
     @Column

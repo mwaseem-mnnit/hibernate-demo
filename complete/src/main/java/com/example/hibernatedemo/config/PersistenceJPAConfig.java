@@ -71,7 +71,7 @@ public class PersistenceJPAConfig {
         factory.setPackagesToScan("com.example.hibernatedemo");
         factory.setDataSource(dataSource());
         Properties properties = new Properties();
-        properties.setProperty("hibernate.jdbc.batch_size", String.valueOf(30));
+        properties.setProperty("hibernate.jdbc.batch_size", String.valueOf(100));
         properties.setProperty("hibernate.jdbc.batch_versioned_data", String.valueOf(true));
         properties.setProperty("hibernate.order_inserts", String.valueOf(true));
         properties.setProperty("hibernate.order_updates", String.valueOf(true));
