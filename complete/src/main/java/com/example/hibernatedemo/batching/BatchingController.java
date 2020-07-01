@@ -1,6 +1,5 @@
 package com.example.hibernatedemo.batching;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="batch")
 public class BatchingController {
 
-    @Autowired
-    private BatchingService batchingService;
+    private final BatchingService batchingService;
+
+    public BatchingController(BatchingService batchingService) {
+        this.batchingService = batchingService;
+    }
 
     @GetMapping(value = "save")
     public String saveBatch(@RequestParam String prefix, @RequestParam Integer size, @RequestParam Boolean isIdentity) {

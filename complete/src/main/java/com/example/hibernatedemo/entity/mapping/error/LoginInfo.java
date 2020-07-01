@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 @Setter
 public class LoginInfo {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     private String name;

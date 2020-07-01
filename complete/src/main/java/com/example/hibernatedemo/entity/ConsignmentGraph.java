@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "Consignment")
 public class ConsignmentGraph {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne( mappedBy = "consignmentGraph")

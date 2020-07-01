@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 public class Vas2 {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @NaturalId
