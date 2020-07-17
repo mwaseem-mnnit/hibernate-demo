@@ -35,3 +35,5 @@ spring:
         order_inserts: true
         order_updates: true
         generate_statistics: true
+youtube:
+  url: https://www.googleapis.com/youtube/v3
